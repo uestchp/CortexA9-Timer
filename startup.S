@@ -40,7 +40,7 @@ Reset_Handler:
 	LDR		SP, Stack_Addr
 	B		_init
 
-Stack_Addr		.word	__stack
+Stack_Addr:		.word	__stack
 
 Undefined_Handler:
 	STMDB		SP, {R0-LR}^
@@ -54,7 +54,7 @@ Undefined_Handler:
 	STMDB		SP!, {R0}
 	NOP
 	MOV		R0, SP
-	BL,		Undefined_Handler_Panic
+	BL		Undefined_Handler_Panic
 
 Prefetch_Handler:
 	/* Put system/user mode R0-R14, exception address (LR - 4) and SPSR on stack */
@@ -67,7 +67,10 @@ Prefetch_Handler:
 	STMDB		SP!, {R0}
 	NOP
 	MOV		R0, SP
-	BL,		Prefetch_Handler_Panic
+	BL		Prefetch_Handler_Panic
+
+Abort_Handler:
+	B		Abort_Handler_Panic
 
 /* Software Interrupt Handler */
 SWI_Handler:
